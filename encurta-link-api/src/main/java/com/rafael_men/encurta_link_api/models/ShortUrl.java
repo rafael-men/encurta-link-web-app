@@ -15,7 +15,7 @@ public class ShortUrl {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 1000)
     private String originalUrl;
 
     @Column(unique = true,nullable = false,length = 10)

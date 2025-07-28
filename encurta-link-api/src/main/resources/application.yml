@@ -16,8 +16,6 @@ spring:
       hibernate:
         format_sql: true
 
-# Migrations #
-
-  flyway:
-    enabled: false
+app:
+  base-short-url: "http://localhost:8090/r/"
 

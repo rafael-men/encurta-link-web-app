@@ -6,13 +6,15 @@ public class ShortUrlResponseDto {
 
     private String originalUrl;
     private String shortCode;
+    private String shortUrl;
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
     private Long visitCount;
 
-    public ShortUrlResponseDto(String originalUrl, String shortCode, LocalDateTime createdAt, LocalDateTime expiresAt, Long visitCount) {
+    public ShortUrlResponseDto(String originalUrl, String shortCode, String shortUrl, LocalDateTime createdAt, LocalDateTime expiresAt, Long visitCount) {
         this.originalUrl = originalUrl;
         this.shortCode = shortCode;
+        this.shortUrl = shortUrl;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.visitCount = visitCount;
@@ -32,6 +34,14 @@ public class ShortUrlResponseDto {
 
     public void setShortCode(String shortCode) {
         this.shortCode = shortCode;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
     public LocalDateTime getCreatedAt() {
