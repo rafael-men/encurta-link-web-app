@@ -3,12 +3,13 @@ package com.rafael_men.encurta_link_api.controllers;
 import com.rafael_men.encurta_link_api.dto.ShortUrlDto;
 import com.rafael_men.encurta_link_api.dto.ShortUrlResponseDto;
 import com.rafael_men.encurta_link_api.services.ShortUrlService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/short-urls")
+@RequestMapping("/encurta/short-urls")
 public class ShortUrlController {
 
     private final ShortUrlService service;
@@ -18,6 +19,7 @@ public class ShortUrlController {
     }
 
     @PostMapping("/generate")
+    @Operation(summary = "Gerar Link Curto")
     public ResponseEntity<ShortUrlResponseDto> createShortUrl(@RequestBody @Valid ShortUrlDto dto) {
         ShortUrlResponseDto response = service.createShortUrl(dto);
         return  ResponseEntity.ok(response);

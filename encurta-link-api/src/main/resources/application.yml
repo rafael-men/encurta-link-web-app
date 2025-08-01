@@ -19,3 +19,6 @@ spring:
 app:
   base-short-url: "http://localhost:8090/r/"
 
+jwt:
+  secret: TXlTZWNyZXRLZXlGb3JKd3RUb2tlbkdlbmVyYXRpb25UaGF0U2hvdWxkQmVMb25nRW5vdWdoRm9yUHJvZHVjdGlvblVzZVdpdGhBdExlYXN0NjRDaGFyYWN0ZXJzMTIzNDU2Nzg5
+  expiration: 360000
