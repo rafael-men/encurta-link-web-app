@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  encurta-link-api:
+    build: ./encurta-link-api
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ep-nameless-cake-ac1aubtl-pooler.sa-east-1.aws.neon.tech:5432/neondb?sslmode=require&channel_binding=require
+      SPRING_DATASOURCE_USERNAME: neondb_owner
+      SPRING_DATASOURCE_PASSWORD: npg_IzyZpmD6H4ak
+      JWT_SECRET: TXlTZWNyZXRLZXlGb3JKd3RUb2tlbkdlbmVyYXRpb25UaGF0U2hvdWxkQmVMb25nRW5vdWdoRm9yUHJvZHVjdGlvblVzZVdpdGhBdExlYXN0NjRDaGFyYWN0ZXJzMTIzNDU2Nzg5
+      JWT_EXPIRATION: 360000
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
