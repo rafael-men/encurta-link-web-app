@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,6 +23,10 @@ public class ShortUrlService {
         this.repository = repository;
         this.urlValidator = urlValidator;
         this.baseShortUrl = baseShortUrl;
+    }
+
+    public List<ShortUrl> findAll() {
+        return repository.findAll();
     }
 
     public ShortUrlResponseDto createShortUrl(ShortUrlDto dto) {

@@ -1,13 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import { generateShortUrl } from '../services/shortenerService';
+import ShortUrlsTable from '../components/PreviousTable';
+
 
 const HomeEncurtador = () => {
-  const [longUrl, setLongUrl] = useState('');
+const [longUrl, setLongUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
+
+  const [reloadTable, setReloadTable] = useState(0);
 
   const user = useMemo(() => {
     try {
@@ -26,7 +30,6 @@ const HomeEncurtador = () => {
 
   const isValidUrl = (value) => {
     try {
-
       const u = new URL(value);
       return !!u.protocol && !!u.host;
     } catch {
@@ -51,21 +54,20 @@ const HomeEncurtador = () => {
 
     setLoading(true);
     const result = await generateShortUrl({ originalUrl: longUrl.trim() });
-setLoading(false);
+    setLoading(false);
 
-if (result.success) {
-  const data = result.data || {};
-
-  if (!data.shortUrl) {
-    setError('O servidor não retornou a URL encurtada.');
-    return;
-  }
-
-  setShortUrl(data.shortUrl); 
-} else {
-  setError(result.message || 'Erro ao gerar link curto.');
-}
-
+    if (result.success) {
+      const data = result.data || {};
+      if (!data.shortUrl) {
+        setError('O servidor não retornou a URL encurtada.');
+        return;
+      }
+      setShortUrl(data.shortUrl);
+      setLongUrl('');
+      setReloadTable((v) => v + 1);
+    } else {
+      setError(result.message || 'Erro ao gerar link curto.');
+    }
   };
 
   const handleCopy = async () => {
@@ -75,7 +77,6 @@ if (result.success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
-
       const temp = document.createElement('input');
       temp.value = shortUrl;
       document.body.appendChild(temp);
@@ -154,6 +155,9 @@ if (result.success) {
             </p>
           </div>
         )}
+         <div className="mt-10">
+          <ShortUrlsTable reload={reloadTable} />
+        </div>
       </div>
     </div>
   );

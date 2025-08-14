@@ -7,6 +7,7 @@ const api = axios.create({
 });
 
 
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -14,6 +15,19 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+export const getAllShortUrls = async () => {
+  try {
+    const { data } = await api.get("/");
+    return { success: true, data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "Erro ao buscar URLs encurtadas.",
+    };
+  }
+};
+
 
 
 export const generateShortUrl = async (shortUrlData) => {
