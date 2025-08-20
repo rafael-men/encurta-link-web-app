@@ -16,19 +16,35 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const getAllShortUrls = async () => {
-  try {
-    const { data } = await api.get("/");
-    return { success: true, data };
-  } catch (error) {
-    return {
-      success: false,
-      message: error.response?.data?.message || "Erro ao buscar URLs encurtadas.",
-    };
-  }
+const getAuthToken = () => {
+  return localStorage.getItem('authToken') || 
+         sessionStorage.getItem('authToken') ||
+         localStorage.getItem('token') ||
+         sessionStorage.getItem('token');
 };
 
-
+export const getAllShortUrls = async () => {   
+  try {
+    // Requisição direta com URL completa exata
+    const { data } = await axios.get( {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    const urls = Array.isArray(data) ? data : [];
+    
+    return { 
+      success: true, 
+      data: urls 
+    };   
+  } catch (error) {
+    return {       
+      success: false,       
+      message: error.response?.data?.message || `Erro ${error.response?.status || ''}: ${error.message}`
+    };   
+  } 
+};
 
 export const generateShortUrl = async (shortUrlData) => {
   try {
