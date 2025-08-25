@@ -23,28 +23,30 @@ const getAuthToken = () => {
          sessionStorage.getItem('token');
 };
 
-export const getAllShortUrls = async () => {   
+export const getAllShortUrls = async () => {
   try {
-    // Requisição direta com URL completa exata
-    const { data } = await axios.get( {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    const urls = Array.isArray(data) ? data : [];
-    
-    return { 
-      success: true, 
-      data: urls 
-    };   
+    const { data } = await api.get();
+
+    const urls = (Array.isArray(data) ? data : []).map(item => ({
+      id: item.id,
+      originalUrl: item.originalUrl,
+      shortCode: item.shortCode,
+    }));
+
+    return {
+      success: true,
+      data: urls,
+    };
   } catch (error) {
-    return {       
-      success: false,       
-      message: error.response?.data?.message || `Erro ${error.response?.status || ''}: ${error.message}`
-    };   
-  } 
+    return {
+      success: false,
+      message:
+        error.response?.data?.message ||
+        `Erro ${error.response?.status || ""}: ${error.message}`,
+    };
+  }
 };
+
 
 export const generateShortUrl = async (shortUrlData) => {
   try {
